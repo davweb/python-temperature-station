@@ -10,7 +10,7 @@ function initialise() {
 function drawCharts() {
 	console.log("drawCharts")
 	temperatureGauge('daily_min', measurements.daily_min);
-	temperatureGauge('daily_max', measurements.daily_min);
+	temperatureGauge('daily_max', measurements.daily_max);
 	temperatureGauge('weekly_min', measurements.weekly_min);
 	temperatureGauge('weekly_max', measurements.weekly_max);
 	historyChart('daily_chart', measurements.daily_data)

@@ -13,7 +13,6 @@ def index(request):
     return render(request, 'dashboard/index.html', context)
     
 def data(request):
-    today = Measurement.objects.filter(time__date=datetime.today())
     now = datetime.now()
     last_day = Measurement.objects.filter(time__range=[now - timedelta(1), now])
     last_week = Measurement.objects.filter(time__range=[now - timedelta(7), now])
@@ -56,8 +55,8 @@ def data(request):
     
     context = {
         'latest': Measurement.objects.latest(),
-        'daily_min': today.earliest('temperature'),
-        'daily_max': today.latest('temperature'),
+        'daily_min': last_day.earliest('temperature'),
+        'daily_max': last_day.latest('temperature'),
         'weekly_min': last_week.earliest('temperature'),
         'weekly_max': last_week.latest('temperature'),
         'daily_data': daily_data.ToJSCode("daily_data", columns_order=("time", "temperature"), order_by="time"),

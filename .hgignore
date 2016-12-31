@@ -1,4 +1,5 @@
 syntax: glob
 *.db
+*.db-journal
 *.pyc
 .DS_Store

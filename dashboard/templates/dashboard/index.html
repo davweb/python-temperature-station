@@ -1,0 +1,76 @@
+{% load static %}
+<html>
+<head>
+	<link rel="stylesheet" href="{% static "dashboard/temperature.css" %}" type="text/css" >
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="/data.js"></script>
+	<script type="text/javascript" src="{% static "dashboard/temperature.js" %}"></script>
+	<meta http-equiv="refresh" content="60">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="dashboard dashboard-wide">
+			<div class="title">
+				Current Temperature
+			</div>
+			<div class="content content-text">
+				{{ latest.temperature }}°C
+			</div>
+		</div>
+		<div class="summary dashboard">
+			<div class="title">
+				Daily Minimum
+			</div>
+			<div class="content content-gauge" id="daily_min">
+			</div>
+		</div>
+		<div class="summary dashboard">
+			<div class="title">
+				Daily Maximum
+			</div>
+			<div class="content content-gauge" id="daily_max">
+			</div>
+		</div>
+		<div class="summary dashboard">
+			<div class="title">
+				Weekly Minimum
+			</div>
+			<div class="content content-gauge" id="weekly_min">
+			</div>
+		</div>
+		<div class="summary dashboard">
+			<div class="title">
+				Weekly Maximum
+			</div>
+			<div class="content content-gauge" id="weekly_max">
+			</div>
+		</div>
+	    <div class="dashboard dashboard-wide">
+			<div class="title">
+				Last 24 hours
+			</div>
+			<div class="content content-chart" id="daily_chart">
+			</div>
+		</div>
+	    <div class="dashboard dashboard-wide">
+			<div class="title">
+				Last Week
+			</div>
+			<div class="content content-chart" id="weekly_chart">
+			</div>
+		</div>
+		<div class="dashboard dashboard-wide">
+			<div class="title">
+				History
+			</div>
+			<div class="content content-chart" id="history_chart">
+			</div>
+		</div>
+	<div>
+		
+	<div class="status">
+		Last updated: {{ latest.time }}
+	</div>
+</body>
+<html>

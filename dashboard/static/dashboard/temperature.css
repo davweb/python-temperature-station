@@ -1,0 +1,56 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 20px;
+}
+
+.dashboard {
+	margin: 10px;
+	border: 2px solid #DDD;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+
+.dashboard-wide {
+	flex-basis: 100%;
+}
+
+.title {
+	text-align: center;
+	background: #DDD;
+	padding: 2px 0;
+	font-size: 16px;
+}
+
+.content {
+	padding: 5px;
+}
+
+.content-text {
+	flex: 0 0 auto;
+	text-align: center;
+	font-size: 100px;
+}
+
+.content-gauge {
+	flex: 0 0 125px;
+	margin: 0 auto;
+}
+
+.content-chart {
+	flex: 1 0 200px;
+	padding: 0px;
+}
+
+.status {
+	font-size: 10px;
+	position: absolute;
+	right: 10px;
+	margin-top: 20px;
+}

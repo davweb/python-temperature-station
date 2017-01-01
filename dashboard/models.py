@@ -8,3 +8,11 @@ class Measurement(models.Model):
 
     class Meta:
        get_latest_by = 'time'
+
+class DailySummary(models.Model):
+    day = models.DateField(primary_key=True)
+    minimum = models.FloatField()
+    maximum = models.FloatField()
+    
+    class Meta:
+        managed = False

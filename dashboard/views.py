@@ -2,6 +2,7 @@ from django.shortcuts import render
 from datetime import datetime, timedelta
 from .models import Measurement, DailySummary
 import gviz_api
+from dashboard_settings import MONTHLY_CHART
 
 QUERY_DAILY_SUMMARY = """
     SELECT
@@ -20,7 +21,8 @@ QUERY_HOURLY_AVERAGE = """
 
 def index(request):
     context = {
-        'latest': Measurement.objects.latest()
+        'latest': Measurement.objects.latest(),
+        'monthly_chart': MONTHLY_CHART
     }
     return render(request, 'dashboard/index.html', context)
     
@@ -31,7 +33,6 @@ def data(request):
     last_day = Measurement.objects.filter(time__range=[now - timedelta(1), now])
     last_week = Measurement.objects.filter(time__range=[seven_days_ago, now])
     last_week_averages = Measurement.objects.raw(QUERY_HOURLY_AVERAGE, [seven_days_ago])
-    last_month_averages = Measurement.objects.raw(QUERY_HOURLY_AVERAGE, [one_month_ago])
     
     daily_data = gviz_api.DataTable(
         [("time", "datetime"), ("temperature", "number")],
@@ -43,10 +44,12 @@ def data(request):
         ((measurement.time, float(measurement.temperature)) for measurement in last_week_averages)
     )
 
-    monthly_data = gviz_api.DataTable(
-        [("time", "datetime"), ("temperature", "number")],
-        ((measurement.time, float(measurement.temperature)) for measurement in last_month_averages)
-    )
+    if MONTHLY_CHART:
+        last_month_averages = Measurement.objects.raw(QUERY_HOURLY_AVERAGE, [one_month_ago])
+        monthly_data = gviz_api.DataTable(
+            [("time", "datetime"), ("temperature", "number")],
+            ((measurement.time, float(measurement.temperature)) for measurement in last_month_averages)
+            )
     
     all_summary = DailySummary.objects.raw(QUERY_DAILY_SUMMARY)
 
@@ -63,8 +66,10 @@ def data(request):
         'weekly_max': last_week.latest('temperature'),
         'daily_data': daily_data.ToJSCode("daily_data", columns_order=("time", "temperature"), order_by="time"),
         'weekly_data': weekly_data.ToJSCode("weekly_data", columns_order=("time", "temperature"), order_by="time"),
-        'monthly_data': monthly_data.ToJSCode("monthly_data", columns_order=("time", "temperature"), order_by="time"),
         'all_data': all_data.ToJSCode("all_data", columns_order=("day", "min", "min_again", "max", "max_again"), order_by="day")
     }
+        
+    if MONTHLY_CHART:
+        context['monthly_data'] = monthly_data.ToJSCode("monthly_data", columns_order=("time", "temperature"), order_by="time");    
         
     return render(request, 'dashboard/data.js', context)

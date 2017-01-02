@@ -60,13 +60,15 @@
 			<div class="content content-chart" id="weekly_chart">
 			</div>
 		</div>
-	    <div class="dashboard dashboard-wide">
-			<div class="title">
-				Last Month
+		{% if monthly_chart %}
+			<div class="dashboard dashboard-wide">
+				<div class="title">
+					Last Month
+				</div>
+				<div class="content content-chart" id="monthly_chart">
+				</div>
 			</div>
-			<div class="content content-chart" id="monthly_chart">
-			</div>
-		</div>
+		{% endif %}
 		<div class="dashboard dashboard-wide">
 			<div class="title">
 				History

@@ -10,7 +10,9 @@ function loadData() {
 		weekly_max: {{ weekly_max.temperature }},
 		daily_data: daily_data,
 		weekly_data: weekly_data,
-		monthly_data: monthly_data,
+		{% if monthly_data %}
+			monthly_data: monthly_data,
+		{% endif %}
 		all_data: all_data
 	}
 }

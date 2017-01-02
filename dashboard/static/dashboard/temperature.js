@@ -14,7 +14,11 @@ function drawCharts() {
 	temperatureGauge('weekly_max', measurements.weekly_max);
 	historyChart('daily_chart', measurements.daily_data)
 	historyChart('weekly_chart', measurements.weekly_data)
-	historyChart('monthly_chart', measurements.monthly_data)
+	
+	if (measurements.monthly_data) {
+		historyChart('monthly_chart', measurements.monthly_data)
+	}
+	
 	waterfallChart('history_chart', measurements.all_data)
 }
 

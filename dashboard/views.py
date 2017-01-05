@@ -25,13 +25,14 @@ def index(request):
         'monthly_chart': MONTHLY_CHART
     }
     return render(request, 'dashboard/index.html', context)
-    
+        
 def data(request):
     now = datetime.now()
+    yesterday = now - timedelta(1)
     seven_days_ago = now - timedelta(7)
     one_month_ago = now - timedelta(28)
-    last_day = Measurement.objects.filter(time__range=[now - timedelta(1), now])
-    last_week = Measurement.objects.filter(time__range=[seven_days_ago, now])
+    last_day = Measurement.objects.filter(time__gte = yesterday)
+    last_week = Measurement.objects.filter(time__gte = seven_days_ago)
     last_week_averages = Measurement.objects.raw(QUERY_HOURLY_AVERAGE, [seven_days_ago])
     
     daily_data = gviz_api.DataTable(
